@@ -43,8 +43,9 @@ function StudentList(){
                    }
                </tbody>
                 
-            </table>
+            </table>            
         </div>
+        
     )
 }
 
