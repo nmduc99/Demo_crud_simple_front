@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { Button } from 'reactstrap';
 import { Table } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 function CourseList() {
     const [courses, setCourse] = useState([]);
 
@@ -20,6 +20,7 @@ function CourseList() {
         <div>
             <h1>Course list</h1>
             <Button color="primary">Add</Button>
+            <p> </p>
             <Table bordered>
                 <thead>
                     <tr>
@@ -27,6 +28,7 @@ function CourseList() {
                         <td><b>Code</b></td>
                         <td><b>Name</b></td>
                         <td><b>Descrition</b></td>
+                        <td></td>
                         <td></td>
                     </tr>
                 </thead>
@@ -38,8 +40,10 @@ function CourseList() {
                                 <td>{courses.code}</td>
                                 <td>{courses.name}</td>
                                 <td>{courses.descrition}</td>
-                                <td><Button color="info">Edit</Button>{' '}</td>
-                                <td><Button color="danger">Delete</Button></td>
+                                <td><Button color="info">Edit</Button>{' '}
+                                    <Button color="danger">Delete</Button>
+                                </td>
+
                             </tr>
                         ))
                     }
