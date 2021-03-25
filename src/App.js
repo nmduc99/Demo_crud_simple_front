@@ -10,12 +10,13 @@ import {
   Link
 } from "react-router-dom";
 
+import { Nav, NavItem, NavLink } from 'reactstrap';
 const Index = () => <h2>Home</h2>;
 function App() {
   return (
     <Router>
       <div className="App">
-        <nav>
+        {/* <nav>
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -27,11 +28,32 @@ function App() {
               <Link to="/courses">Course</Link>
             </li>
           </ul>
-        </nav>    
+        </nav>     */}
+        {/* 
+        <nav class="nav">
+          <a class="home" href="/">Home </a>
+          <a class="nav-link" href="/students">Student </a>
+          <a class="nav-link" href="/courses">Course </a>
+        </nav> */}
+
+
+        <Nav>
+          <NavItem>
+            <NavLink href="/">Home</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/students">Student</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/courses">Course</NavLink>
+          </NavItem>      
+        </Nav>
+
+
         <Route path="/" exact component={Index} />
         <Route path="/students/" exact component={StudentList} />
         <Route path="/courses/" exact component={CourseList} />
-       </div>  
+      </div>
     </Router>
   );
 }

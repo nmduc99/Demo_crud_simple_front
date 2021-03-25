@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import React from "react"
 import axios from 'axios'
-
-
+import { Button } from 'reactstrap';
+import { Table } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 function StudentList(){
     const [students, setStudent] = useState([]);
 
@@ -13,12 +15,13 @@ function StudentList(){
         }
         getAll()
     },[])
-
+    
     return (
         <div>
-            <h1>Student list</h1>
-            <table>
-               <thead>
+            <h1>Student list</h1>            
+            <Button color="primary">Add</Button>
+            <Table bordered>
+                <thead>
                 <tr>
                         <td><b>Id</b></td>
                         <td><b>Name</b></td>
@@ -37,16 +40,18 @@ function StudentList(){
                                <td>{student.codeStudent}</td>
                                <td>{student.address}</td>
                                <td>{student.email}</td>
-                                <td><button>Edit</button></td>
+                                <td><Button color="info">Edit</Button>{' '}</td>
+                                <td><Button color="danger">Delete</Button></td>
                            </tr>
                        ))
                    }
                </tbody>
                 
-            </table>            
+            </Table>            
         </div>
         
     )
+    
 }
 
 export default StudentList;
