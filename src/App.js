@@ -1,21 +1,22 @@
-
 import './App.css';
 import StudentList from './components/student/StudentList';
 import CourseList from './components/course/CourseList';
 import React from "react";
 import {
   BrowserRouter as Router,
-  Switch,
+  //Switch,
   Route,
-  Link
+  //Link
 } from "react-router-dom";
+
 
 import { Nav, NavItem, NavLink } from 'reactstrap';
 const Index = () => <h2>Home</h2>;
 function App() {
   return (
-    <Router>
-      <div className="App">
+     
+      <Router>
+        <div className="App">
         {/* <nav>
           <ul>
             <li>
@@ -48,7 +49,7 @@ function App() {
             <NavLink href="/courses">Course</NavLink>
           </NavItem>      
         </Nav>
-
+          
 
         <Route path="/" exact component={Index} />
         <Route path="/students/" exact component={StudentList} />

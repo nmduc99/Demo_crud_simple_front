@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from 'axios'
+//import axios from 'axios'
 
 import { Button } from 'reactstrap';
 import { Table } from 'reactstrap';
@@ -8,18 +8,23 @@ function CourseList() {
     const [courses, setCourse] = useState([]);
 
     useEffect(() => {
-        async function getAll() {
-            const response = await axios.get(`http://localhost:8080/courses`)
-                .then(res => res.data)
-            setCourse(response);
-        }
-        getAll()
+        // async function getAll() {
+        //     const response = await axios.get(`http://localhost:8080/courses`)
+        //         .then(res => res.data)
+        //     setCourse(response);
+        // }
+        // getAll()
+        fetch('http://localhost:8080/courses')
+        .then(response => response.json())
+        .then(data => setCourse(data));
     }, [])
+
 
     return (
         <div>
             <h1>Course list</h1>
-            <Button color="primary">Add</Button>
+            <p> </p>
+            <Button color="primary" >Add</Button>
             <p> </p>
             <Table bordered>
                 <thead>

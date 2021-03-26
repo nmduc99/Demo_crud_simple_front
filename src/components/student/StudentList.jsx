@@ -1,25 +1,41 @@
 import { useEffect, useState } from "react";
 import React from "react"
-import axios from 'axios'
+import Axios from 'axios'
 import { Button } from 'reactstrap';
 import { Table } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-function StudentList() {
-    const [students, setStudent] = useState([]);
 
+function StudentList() {
+    // const [state, setState] = useState([])
+    const deleteTask = (id)=> {
+        Axios({
+            method: "DELETE",
+            url: `http://localhost:8080/students/${id}`,
+          }).catch((err) => {
+            console.log(err);
+          });
+    }
+    const [students, setStudent] = useState([]);
     useEffect(() => {
-        async function getAll() {
-            const response = await axios.get(`http://localhost:8080/students`)
-                .then(res => res.data)
-            setStudent(response);
-        }
-        getAll()
+        // async function getAll() {
+        //     const response = await axios.get(`http://localhost:8080/students`)
+        //         .then(res => res.data)
+        //     setStudent(response);.
+                fetch('http://localhost:8080/students')
+                .then(response => 
+                    response.json())
+                .then(data => {
+                    setStudent(data)});
+        //getAll()
+        
     }, [])
+    
 
     return (
         <div>
             <h1>Student list</h1>
-            <Button color="primary">Add</Button>
+            <p> </p>
+            <Button  color="primary" >Add</Button>
             <p> </p>
             <Table bordered>
                 <thead>
@@ -29,7 +45,9 @@ function StudentList() {
                         <td><b>CodeStudent</b></td>
                         <td><b>Address</b></td>
                         <td><b>Email</b></td>
-                        <td></td>
+                        <td>
+
+                        </td>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,8 +59,12 @@ function StudentList() {
                                 <td>{student.codeStudent}</td>
                                 <td>{student.address}</td>
                                 <td>{student.email}</td>
-                                <td><Button color="info">Edit</Button>{' '}
-                                    <Button color="danger">Delete</Button>
+                                <td>
+                                    <Button color="info">Edit</Button>
+                                    <Button  onClick={() => {
+                                    deleteTask(student.id);
+                                    }} color="danger">Delete
+                                    </Button>
                                 </td>
                             </tr>
                         ))
