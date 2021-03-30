@@ -24,31 +24,68 @@ function CourseList() {
     async function handleOnSubmit(e) {
         e.preventDefault();
         const data = {
-            code,
-            name,
-            descrition
+            code : course.code,
+            name: course.name,
+            descrition : course.descrition
         }
-        console.log(data)
+        if(course.id){
+            const{id} = course;
+            data.id = id
+            await Axios.put(`http://localhost:8080/courses/${id}`, data);
+
+        }else
+        {
+            await Axios.post('http://localhost:8080/courses', data);
+
+        }
         setModal(false);
-        await Axios.post('http://localhost:8080/courses', data);
         getAll();
+
+        setCourse({
+            id: '',
+            code: '',
+            name: '',
+            descrition:'',
+        })
     }
     function handleOnAdd(){
         setModal(true);
     }
     function handleCancel(){
+        setCourse({
+            id: '',
+            code: '',
+            name: '',
+            descrition:'',
+        })
         setModal(false);
     }
     
-    const [code, setCode] = useState();
-    const [name, setName] = useState();
-    const [descrition, setDescrition] = useState();
+function editCourse(id)
+{
+    Axios.get(`http://localhost:8080/courses/${id}`)
+    .then(response => response.data)
+    .then(data => setCourse({
+        id: data.id,
+        code: data.code,
+        name: data.name,
+        descrition: data.descrition
+       
+    }))
+setModal(true)
+}
+
     const [modal, setModal] = useState(false);
 
+    const [course, setCourse] = useState({
+        id: '',
+        code: '',
+        name : '',
+        descrition :''
+    }) 
 
     const [state, setState] = useState({ loading: true, data: [] });
     const { loading, data } = state || {};
-    console.log('render', state);
     useEffect(() => {
         getAll();
     }, [])
@@ -80,7 +117,8 @@ function CourseList() {
                                     <td>{item.code}</td>
                                     <td>{item.name}</td>
                                     <td>{item.descrition}</td>
-                                    <td><Button color="info">Edit</Button>{' '}
+                                    <td><Button color="info" onClick={() => editCourse(item.id)} 
+                                            >Edit</Button>{' '}
                                         <Button onClick={() => {
                                             deleteCourse(item.id);
                                         }}
@@ -105,18 +143,18 @@ function CourseList() {
                             <div>
                                     <label for="code">Code:</label><br />
                                     <input type="text" id="code" name="code"
-                                        value={code} onChange={e => setCode(e.target.value)} /> <br />
+                                        value={course.code} onChange={e => setCourse({...course, code: e.target.value})} /> <br />
                                 </div>
                                 <div>
                                     <label for="name">Name:</label> <br />
                                     <input type="text" id="name" name="name"
-                                        value={name} onChange={e => setName(e.target.value)} /> <br />
+                                        value={course.name} onChange={e => setCourse({...course, name: e.target.value})} /> <br />
                                 </div>
                               
                                 <div>
                                     <label for="descrition">Descrition:</label> <br />
                                     <input type="text" id="descrition" name="descrition"
-                                        value={descrition} onChange={e =>  setDescrition(e.target.value)} /> <br />
+                                        value={course.descrition} onChange={e =>  setCourse({...course, descrition: e.target.value})} /> <br />
                                 </div>
                                
 

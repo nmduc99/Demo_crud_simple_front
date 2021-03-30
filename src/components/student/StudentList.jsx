@@ -8,6 +8,7 @@ import axios from "axios";
 function StudentList() {
 
     const deleteStudent = async (id) => {
+        
         try {
             await Axios.delete(`http://localhost:8080/students/${id}`);
             await getAll();
@@ -31,33 +32,72 @@ function StudentList() {
         getAll();
     }, [])
 
-     async function handleOnSubmit(e) {
+    async function handleOnSubmit(e) {
         e.preventDefault();
         const data = {
-            name,
-            codeStudent : code,
-            address,
-            email
+            name: student.name,
+            codeStudent: student.code,
+            address: student.address,
+            email: student.email
         }
-        console.log(data)
+
+        if (student.id) {
+            const { id } = student;
+            data.id = id
+            console.log(data)
+            await axios.put(`http://localhost:8080/students/${id}`, data);
+        } else {
+            await axios.post('http://localhost:8080/students', data);
+        }
         setModal(false);
-        console.log("log")
-        await axios.post('http://localhost:8080/students', data);
-        await getAll();
-         
+        getAll();
+
+        setStudent({
+            id: '',
+            name: '',
+            code: '',
+            address: '',
+            email: '',
+
+        })
     }
-    function handleOnAdd(){
+
+    function handleOnAdd() {
         setModal(true);
     }
-    function handleCancel(){
+    function handleCancel() {
+        setStudent({
+            id: '',
+            name: '',
+            code: '',
+            address: '',
+            email: '',
+
+        })
         setModal(false);
+    }
+    function editStudent(id) {
+        axios.get(`http://localhost:8080/students/${id}`)
+            .then(response => response.data)
+            .then(data => setStudent({
+                id: data.id,
+                name: data.name,
+                code: data.codeStudent,
+                address: data.address,
+                email: data.email
+            }))
+        setModal(true)
     }
 
 
-    const [name, setName] = useState();
-    const [code, setCodeStudent] = useState();
-    const [address, setAddress] = useState();
-    const [email, setEmail] = useState();
+    const [student, setStudent] = useState({
+        id: '',
+        name: '',
+        code: '',
+        address: '',
+        email: '',
+
+    })
 
     const [modal, setModal] = useState(false);
 
@@ -76,12 +116,10 @@ function StudentList() {
                             <td><b>CodeStudent</b></td>
                             <td><b>Address</b></td>
                             <td><b>Email</b></td>
-                            <td>
-
-                            </td>
+                            <td></td>
                         </tr>
                     </thead>
-                    <tbody> 
+                    <tbody>
                         {
                             data && data.map((item, courseIndex) => (
                                 <tr key={courseIndex}>
@@ -91,9 +129,10 @@ function StudentList() {
                                     <td>{item.address}</td>
                                     <td>{item.email}</td>
                                     <td>
-                                        <Button color="info" >Edit</Button>
+                                        <Button color="info"
+                                            onClick={() => editStudent(item.id)}
+                                        >Edit</Button>{' '}
                                         <Button onClick={() => {
-
                                             deleteStudent(item.id);
                                         }} color="danger">Delete
                                     </Button>
@@ -117,33 +156,34 @@ function StudentList() {
                                 <div>
                                     <label for="name">Name:</label> <br />
                                     <input type="text" id="name" name="name"
-                                        value={name} onChange={e => setName(e.target.value)} /> <br />
+                                        value={student.name} onChange={e => setStudent({ ...student, name: e.target.value })} /> <br />
                                 </div>
                                 <div>
                                     <label for="code">CodeStudent:</label><br />
                                     <input type="text" id="code" name="code"
-                                        value={code} onChange={e => setCodeStudent(e.target.value)} /> <br />
+                                        value={student.code} onChange={e => setStudent({ ...student, code: e.target.value })} /> <br />
                                 </div>
                                 <div>
                                     <label for="address">Address:</label> <br />
                                     <input type="text" id="address" name="address"
-                                        value={address} onChange={e => setAddress(e.target.value)} /> <br />
+                                        value={student.address} onChange={e => setStudent({ ...student, address: e.target.value })} /> <br />
                                 </div>
                                 <div>
                                     <label for="email">Email:</label> <br />
-                                    <input type="text" id="email" name="email" 
-                                    value={email}  onChange={e => setEmail(e.target.value)}  /> <br />
+                                    <input type="text" id="email" name="email"
+                                        value={student.email} onChange={e => setStudent({ ...student, email: e.target.value })} /> <br />
                                 </div>
 
                             </form>
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" type="submit"  form="formSubmit" >Save</Button>{' '}
+                        <Button color="primary" type="submit" form="formSubmit" >Save</Button>{' '}
                         <Button color="secondary" onClick={handleCancel}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>
+
         </div>
 
     )
