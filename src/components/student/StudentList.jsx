@@ -7,14 +7,20 @@ import axios from "axios";
 
 function StudentList() {
 
+
+
     const deleteStudent = async (id) => {
-        
+
         try {
             await Axios.delete(`http://localhost:8080/students/${id}`);
+
             await getAll();
+
         } catch (error) {
             console.log(error);
         }
+
+
     }
 
 
@@ -51,7 +57,7 @@ function StudentList() {
         }
         setModal(false);
         getAll();
-
+        
         setStudent({
             id: '',
             name: '',
@@ -99,6 +105,7 @@ function StudentList() {
 
     })
 
+
     const [modal, setModal] = useState(false);
 
     return (
@@ -132,6 +139,7 @@ function StudentList() {
                                         <Button color="info"
                                             onClick={() => editStudent(item.id)}
                                         >Edit</Button>{' '}
+                                        
                                         <Button onClick={() => {
                                             deleteStudent(item.id);
                                         }} color="danger">Delete
@@ -149,7 +157,7 @@ function StudentList() {
             <div>
 
                 <Modal isOpen={modal} fade={true}   >
-                    <ModalHeader >Add Student</ModalHeader>
+                    <ModalHeader >Student</ModalHeader>
                     <ModalBody>
                         <div>
                             <form id="formSubmit" onSubmit={handleOnSubmit} >
@@ -183,6 +191,7 @@ function StudentList() {
                     </ModalFooter>
                 </Modal>
             </div>
+
 
         </div>
 

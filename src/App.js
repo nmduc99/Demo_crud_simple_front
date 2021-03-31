@@ -8,15 +8,14 @@ import {
   Route,
   //Link
 } from "react-router-dom";
-
-
 import { Nav, NavItem, NavLink } from 'reactstrap';
+import Example from './components/example'
+
 const Index = () => <h2>Home</h2>;
 function App() {
   return (
-     
-      <Router>
-        <div className="App">
+    <Router>
+      <div className="App">
         {/* <nav>
           <ul>
             <li>
@@ -40,22 +39,26 @@ function App() {
 
         <Nav>
           <NavItem>
-            <NavLink href="/">Home</NavLink>
+            <NavLink href="/home" >Home</NavLink>
+
           </NavItem>
           <NavItem>
             <NavLink href="/students">Student</NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="/courses">Course</NavLink>
-          </NavItem>      
+          </NavItem>
         </Nav>
-          
 
-        <Route path="/" exact component={Index} />
+        
+        <Route path="/" exact component={Example }/> 
+        <Route path="/home" exact component={Index} />
         <Route path="/students/" exact component={StudentList} />
         <Route path="/courses/" exact component={CourseList} />
       </div>
     </Router>
+
+
   );
 }
 

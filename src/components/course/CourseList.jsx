@@ -136,7 +136,7 @@ setModal(true)
             <div>
 
                 <Modal isOpen={modal} fade={true}   >
-                    <ModalHeader >Add Student</ModalHeader>
+                    <ModalHeader >Course</ModalHeader>
                     <ModalBody>
                         <div>
                             <form id="formSubmit" onSubmit={handleOnSubmit} >
