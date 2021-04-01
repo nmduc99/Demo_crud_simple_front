@@ -1,64 +1,61 @@
 import './App.css';
 import StudentList from './components/student/StudentList';
 import CourseList from './components/course/CourseList';
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   //Switch,
   Route,
-  //Link
+  Link
 } from "react-router-dom";
-import { Nav, NavItem, NavLink } from 'reactstrap';
-import Example from './components/example'
+import { Nav, NavItem } from 'reactstrap';
+import NormalLoginForm from './components/authentication/NormalLoginForm'
+
 
 const Index = () => <h2>Home</h2>;
 function App() {
+  const [authen, setAuthen] = useState(false);
+  function Login(username, password) {
+    console.log(username)
+    if (username === 'admin') {
+      setAuthen(true)
+    }
+  }
+
+  const renderComponent = (authen) => {
+    if (authen) {
+      return (
+        <React.Fragment>
+          <Route path="/home" exact component={Index} />
+          <Route path="/students/" exact component={StudentList} />
+          <Route path="/courses/" exact component={CourseList} />
+        </React.Fragment>
+      )
+    } else {
+      return (    
+        <Route path="/" exact render={() => {
+          return !authen && <NormalLoginForm login={Login} />
+        }} />
+      );
+    }
+  }
   return (
     <Router>
       <div className="App">
-        {/* <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/students">Student</Link>
-            </li>
-            <li>
-              <Link to="/courses">Course</Link>
-            </li>
-          </ul>
-        </nav>     */}
-        {/* 
-        <nav class="nav">
-          <a class="home" href="/">Home </a>
-          <a class="nav-link" href="/students">Student </a>
-          <a class="nav-link" href="/courses">Course </a>
-        </nav> */}
-
-
-        <Nav>
+        <Nav vertical>
           <NavItem>
-            <NavLink href="/home" >Home</NavLink>
-
+            <Link to="/home">Home</Link>
           </NavItem>
           <NavItem>
-            <NavLink href="/students">Student</NavLink>
+            <Link to="/students">Student</Link>
           </NavItem>
           <NavItem>
-            <NavLink href="/courses">Course</NavLink>
+            <Link to="/courses">Course</Link>
           </NavItem>
         </Nav>
-
-        
-        <Route path="/" exact component={Example }/> 
-        <Route path="/home" exact component={Index} />
-        <Route path="/students/" exact component={StudentList} />
-        <Route path="/courses/" exact component={CourseList} />
+        {renderComponent(authen)}
       </div>
     </Router>
-
-
   );
 }
 

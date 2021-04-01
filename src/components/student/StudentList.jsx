@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import React from "react"
 import Axios from 'axios'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 
@@ -11,9 +11,8 @@ function StudentList() {
 
     const deleteStudent = async (id) => {
 
-        try {
+        try {   
             await Axios.delete(`http://localhost:8080/students/${id}`);
-
             await getAll();
 
         } catch (error) {
@@ -22,9 +21,7 @@ function StudentList() {
 
 
     }
-
-
-
+    
     async function getAll() {
         setState({ loading: true, data: [] });
         const response = await Axios.get(`http://localhost:8080/students`);
@@ -83,6 +80,7 @@ function StudentList() {
         setModal(false);
     }
     function editStudent(id) {
+        
         axios.get(`http://localhost:8080/students/${id}`)
             .then(response => response.data)
             .then(data => setStudent({
@@ -112,7 +110,7 @@ function StudentList() {
         <div>
             <h1>Student list</h1>
             <p> </p>
-            <Button color="primary" onClick={handleOnAdd} >Add</Button>
+            <Button color="primary"  onClick={handleOnAdd} >Add</Button>
             <p> </p>
             {!loading && (
                 <Table bordered>
@@ -140,7 +138,7 @@ function StudentList() {
                                             onClick={() => editStudent(item.id)}
                                         >Edit</Button>{' '}
                                         
-                                        <Button onClick={() => {
+                                        <Button  onClick={() => {
                                             deleteStudent(item.id);
                                         }} color="danger">Delete
                                     </Button>
