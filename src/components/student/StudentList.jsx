@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import React from "react"
 import Axios from 'axios'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
-
+import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 function StudentList() {
 
 
@@ -14,7 +14,7 @@ function StudentList() {
         try {   
             await Axios.delete(`http://localhost:8080/students/${id}`);
             await getAll();
-
+          
         } catch (error) {
             console.log(error);
         }
@@ -110,7 +110,7 @@ function StudentList() {
         <div>
             <h1>Student list</h1>
             <p> </p>
-            <Button color="primary"  onClick={handleOnAdd} >Add</Button>
+            <Button color="primary"  onClick={handleOnAdd}>  <PlusOutlined/> Add</Button>
             <p> </p>
             {!loading && (
                 <Table bordered>
@@ -136,11 +136,11 @@ function StudentList() {
                                     <td>
                                         <Button color="info"
                                             onClick={() => editStudent(item.id)}
-                                        >Edit</Button>{' '}
+                                        > <EditOutlined/> Edit</Button>{' '}
                                         
                                         <Button  onClick={() => {
                                             deleteStudent(item.id);
-                                        }} color="danger">Delete
+                                        }} color="danger"> <DeleteOutlined /> Delete
                                     </Button>
                                     </td>
                                 </tr>

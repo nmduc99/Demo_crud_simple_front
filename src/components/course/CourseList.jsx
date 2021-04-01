@@ -3,6 +3,8 @@ import Axios from 'axios'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { Table } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+
 function CourseList() {
     const deleteCourse = async (id) => {
         try {
@@ -95,7 +97,7 @@ setModal(true)
         <div>
             <h1>Course list</h1>
             <p> </p>
-            <Button color="primary" onClick={handleOnAdd}>Add</Button>
+            <Button color="primary" onClick={handleOnAdd}> <PlusOutlined/>  Add</Button>
             <p> </p>
             {!loading && (
                 <Table bordered>
@@ -118,11 +120,11 @@ setModal(true)
                                     <td>{item.name}</td>
                                     <td>{item.descrition}</td>
                                     <td><Button color="info" onClick={() => editCourse(item.id)} 
-                                            >Edit</Button>{' '}
+                                            > <EditOutlined/> Edit</Button>{' '}
                                         <Button onClick={() => {
                                             deleteCourse(item.id);
                                         }}
-                                            color="danger">Delete</Button>
+                                            color="danger"> <DeleteOutlined /> Delete</Button>
                                     </td>
 
                                 </tr>

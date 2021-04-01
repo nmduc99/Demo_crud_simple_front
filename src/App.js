@@ -8,8 +8,9 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { Nav, NavItem } from 'reactstrap';
+import { Nav, NavItem, Col } from 'reactstrap';
 import NormalLoginForm from './components/authentication/NormalLoginForm'
+import { Alert } from 'antd';
 
 
 const Index = () => <h2>Home</h2>;
@@ -26,6 +27,9 @@ function App() {
     if (authen) {
       return (
         <React.Fragment>
+          <Col sm="3">
+          <Alert message="Đăng nhập thành công"   type="success"closable   />
+          </Col>
           <Route path="/home" exact component={Index} />
           <Route path="/students/" exact component={StudentList} />
           <Route path="/courses/" exact component={CourseList} />
