@@ -2,14 +2,22 @@ import { useEffect, useState } from "react";
 import Axios from 'axios'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { Table } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { message } from 'antd';
 
 function CourseList() {
+    const key = 'test';
+        const mesdel = () => {
+        message.loading({ content: 'Loading...', key });
+        setTimeout(() => {
+          message.success({ content: 'Successfully!', key, duration: 2 });
+        }, 200);
+      };
     const deleteCourse = async (id) => {
         try {
             await Axios.delete(`http://localhost:8080/courses/${id}`);
             await getAll();
+            mesdel();
         } catch (error) {
             console.log(error);
         }
@@ -30,6 +38,17 @@ function CourseList() {
             name: course.name,
             descrition : course.descrition
         }
+        const info = () => {
+            message.error('Do not leave the code and name blank');
+          };
+
+        
+        if(course.code ===""){
+           info();             
+        }else 
+        if(course.name ===""){
+            info();             
+         }else 
         if(course.id){
             const{id} = course;
             data.id = id

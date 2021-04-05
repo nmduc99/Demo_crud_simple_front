@@ -1,5 +1,5 @@
 @import '~antd/dist/antd.css';
-
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
 .App {
   text-align: center;
@@ -25,10 +25,15 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+
 }
 
 .App-link {
   color: #61dafb;
+}
+.nav li {
+  margin-left: 2rem;
+  padding: 2rem 4rem;
 }
 
 @keyframes App-logo-spin {

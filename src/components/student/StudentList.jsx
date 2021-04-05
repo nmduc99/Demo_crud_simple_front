@@ -1,27 +1,37 @@
 import { useEffect, useState } from "react";
 import React from "react"
 import Axios from 'axios'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 import axios from "axios";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { message } from 'antd';
+
+
+
 function StudentList() {
 
-
-
+        const key = 'test';
+        const mesdel = () => {
+        message.loading({ content: 'Loading...', key });
+        setTimeout(() => {
+          message.success({ content: 'Successfully!', key, duration: 2 });
+        }, 200);
+      };
     const deleteStudent = async (id) => {
-
+        
         try {   
             await Axios.delete(`http://localhost:8080/students/${id}`);
             await getAll();
-          
+            mesdel();
         } catch (error) {
             console.log(error);
         }
-
+        console.log("Delete");   
 
     }
-    
+   
+  
+
     async function getAll() {
         setState({ loading: true, data: [] });
         const response = await Axios.get(`http://localhost:8080/students`);
@@ -44,6 +54,20 @@ function StudentList() {
             email: student.email
         }
 
+        const info = () => {
+            message.error('Do not leave your name, student code, or address blank');
+          };
+         
+        if(student.name ===""){
+           info(); 
+        }else 
+        if(student.code ===""){
+            info(); 
+         }else 
+         if(student.address ===""){
+            info(); 
+         }else 
+             
         if (student.id) {
             const { id } = student;
             data.id = id
@@ -94,14 +118,14 @@ function StudentList() {
     }
 
 
+
     const [student, setStudent] = useState({
         id: '',
         name: '',
         code: '',
         address: '',
         email: '',
-
-    })
+            })
 
 
     const [modal, setModal] = useState(false);
@@ -150,8 +174,7 @@ function StudentList() {
 
                 </Table>
             )}
-
-
+                
             <div>
 
                 <Modal isOpen={modal} fade={true}   >
@@ -160,9 +183,11 @@ function StudentList() {
                         <div>
                             <form id="formSubmit" onSubmit={handleOnSubmit} >
                                 <div>
-                                    <label for="name">Name:</label> <br />
+                                    <label for="name">Name:</label> <br />                                    
                                     <input type="text" id="name" name="name"
-                                        value={student.name} onChange={e => setStudent({ ...student, name: e.target.value })} /> <br />
+                                    value={student.name} onChange={e => setStudent({ ...student, name: e.target.value })} /> <br />
+
+
                                 </div>
                                 <div>
                                     <label for="code">CodeStudent:</label><br />
@@ -182,7 +207,7 @@ function StudentList() {
 
                             </form>
                         </div>
-                    </ModalBody>
+                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" type="submit" form="formSubmit" >Save</Button>{' '}
                         <Button color="secondary" onClick={handleCancel}>Cancel</Button>

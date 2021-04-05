@@ -2,6 +2,8 @@ import './App.css';
 import StudentList from './components/student/StudentList';
 import CourseList from './components/course/CourseList';
 import React, { useState } from "react";
+
+
 import {
   BrowserRouter as Router,
   //Switch,
@@ -16,6 +18,7 @@ import { Alert } from 'antd';
 const Index = () => <h2>Home</h2>;
 function App() {
   const [authen, setAuthen] = useState(false);
+  
   function Login(username, password) {
     console.log(username)
     if (username === 'admin') {
@@ -28,7 +31,7 @@ function App() {
       return (
         <React.Fragment>
           <Col sm="3">
-          <Alert message="Đăng nhập thành công"   type="success"closable   />
+          <Alert message="Logged in successfully"   type="success" closable showIcon  />
           </Col>
           <Route path="/home" exact component={Index} />
           <Route path="/students/" exact component={StudentList} />
@@ -46,21 +49,20 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Nav vertical>
+        <Nav>
           <NavItem>
-            <Link to="/home">Home</Link>
+            <Link to="/home"><h4>Home </h4></Link>
           </NavItem>
           <NavItem>
-            <Link to="/students">Student</Link>
+            <Link to="/students"><h4>Student </h4></Link>
           </NavItem>
           <NavItem>
-            <Link to="/courses">Course</Link>
+            <Link to="/courses"><h4>Course</h4></Link>
           </NavItem>
-        </Nav>
+        </Nav>        
         {renderComponent(authen)}
       </div>
     </Router>
   );
 }
-
 export default App;
