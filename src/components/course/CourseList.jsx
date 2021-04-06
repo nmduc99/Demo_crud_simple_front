@@ -127,7 +127,6 @@ setModal(true)
                             <td><b>Name</b></td>
                             <td><b>Descrition</b></td>
                             <td></td>
-                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
