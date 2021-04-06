@@ -32,9 +32,20 @@
   color: #61dafb;
 }
 .nav li {
-  margin-left: 2rem;
-  padding: 2rem 4rem;
+  margin-left: 1rem;
+  padding: 1rem 1rem;
+  margin-bottom: 3rem;
 }
+.ant-form{
+      width: 900px;
+		  height: 900px;
+      position: absolute;
+		  left: 40%;
+		  margin-left: -50px;
+      margin-top: 3rem;
+    }
+
+
 
 @keyframes App-logo-spin {
   from {
