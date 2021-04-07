@@ -48,10 +48,10 @@
       float: right;
     }
 
-    .ant-menu{
+.ant-menu{
       margin-top: 1rem;
       float: left;
-    }
+}
 
 .ant-alert{
       width: auto;
@@ -68,8 +68,12 @@
   height: auto;
   position: absolute ;
   left: 30%;
-  margin-top: 2rem;
+  margin-top: 3rem;
  }
+
+.ant-spin{
+  margin-top: 5rem;
+}
 
 @keyframes App-logo-spin {
   from {

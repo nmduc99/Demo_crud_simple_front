@@ -3,7 +3,7 @@ import Axios from 'axios'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { Table } from 'reactstrap';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { message } from 'antd';
+import { message,Spin } from 'antd';
 
 function CourseList() {
     const key = 'test';
@@ -72,6 +72,7 @@ function CourseList() {
     function handleOnAdd(){
         setModal(true);
     }
+
     function handleCancel(){
         setCourse({
             id: '',
@@ -82,42 +83,44 @@ function CourseList() {
         setModal(false);
     }
     
-function editCourse(id)
-{
-    Axios.get(`http://localhost:8080/courses/${id}`)
-    .then(response => response.data)
-    .then(data => setCourse({
-        id: data.id,
-        code: data.code,
-        name: data.name,
-        descrition: data.descrition
-       
-    }))
-setModal(true)
-}
+    function editCourse(id)
+    {
+        Axios.get(`http://localhost:8080/courses/${id}`)
+        .then(response => response.data)
+        .then(data => setCourse({
+            id: data.id,
+            code: data.code,
+            name: data.name,
+            descrition: data.descrition
+        
+        }))
+    setModal(true)
+    }
 
-    const [modal, setModal] = useState(false);
+        const [modal, setModal] = useState(false);
 
-    const [course, setCourse] = useState({
-        id: '',
-        code: '',
-        name : '',
-        descrition :''
-    }) 
+        const [course, setCourse] = useState({
+            id: '',
+            code: '',
+            name : '',
+            descrition :''
+        }) 
 
-    const [state, setState] = useState({ loading: true, data: [] });
-    const { loading, data } = state || {};
-    useEffect(() => {
-        getAll();
-    }, [])
+        const [state, setState] = useState({ loading: true, data: [] });
+        const { loading, data } = state || {};
+        useEffect(() => {
+            getAll();
+        }, [])
 
 
-    return (
+     return (
         <div>
             <h1>Course list</h1>
             <p> </p>
             <Button color="primary" onClick={handleOnAdd}> <PlusOutlined/>  Add</Button>
             <p> </p>
+            <Spin tip="Loading..." delay="1000"  spinning={loading} size="large"> 
+            
             {!loading && (
                 <Table bordered>
                     <thead>
@@ -138,7 +141,7 @@ setModal(true)
                                     <td>{item.name}</td>
                                     <td>{item.descrition}</td>
                                     <td><Button color="info" onClick={() => editCourse(item.id)} 
-                                            > <EditOutlined/> Edit</Button>{' '}
+                                            > <EditOutlined/>Edit</Button>{' '}
                                         <Button onClick={() => {
                                             deleteCourse(item.id);
                                         }}
@@ -152,6 +155,7 @@ setModal(true)
 
                 </Table>
             )}
+            </Spin>
 
             <div>
 
@@ -160,7 +164,7 @@ setModal(true)
                     <ModalBody>
                         <div>
                             <form id="formSubmit" onSubmit={handleOnSubmit} >
-                            <div>
+                                <div>
                                     <label for="code">Code:</label><br />
                                     <input type="text" id="code" name="code"
                                         value={course.code} onChange={e => setCourse({...course, code: e.target.value})} /> <br />
@@ -176,7 +180,6 @@ setModal(true)
                                     <input type="text" id="descrition" name="descrition"
                                         value={course.descrition} onChange={e =>  setCourse({...course, descrition: e.target.value})} /> <br />
                                 </div>
-                               
 
                             </form>
                         </div>

@@ -4,7 +4,7 @@ import Axios from 'axios'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 import axios from "axios";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { message } from 'antd';
+import { message, Spin } from 'antd';
 
 
 
@@ -13,20 +13,20 @@ function StudentList() {
         const key = 'test';
         const mesdel = () => {
         message.loading({ content: 'Loading...', key });
-        setTimeout(() => {
+            setTimeout(() => {
           message.success({ content: 'Successfully!', key, duration: 2 });
         }, 200);
       };
+
     const deleteStudent = async (id) => {
-        
-        try {   
+            try {   
             await Axios.delete(`http://localhost:8080/students/${id}`);
             await getAll();
             mesdel();
         } catch (error) {
             console.log(error);
         }
-        console.log("Delete");   
+        //console.log("Delete");   
 
     }
    
@@ -103,6 +103,7 @@ function StudentList() {
         })
         setModal(false);
     }
+
     function editStudent(id) {
         
         axios.get(`http://localhost:8080/students/${id}`)
@@ -136,6 +137,7 @@ function StudentList() {
             <p> </p>
             <Button color="primary"  onClick={handleOnAdd}>  <PlusOutlined/> Add</Button>
             <p> </p>
+            <Spin tip="Loading..." delay="1000" spinning={loading} size="large"> 
             {!loading && (
                 <Table bordered>
                     <thead>
@@ -160,12 +162,11 @@ function StudentList() {
                                     <td>
                                         <Button color="info"
                                             onClick={() => editStudent(item.id)}
-                                        > <EditOutlined/> Edit</Button>{' '}
-                                        
+                                        > <EditOutlined/> Edit</Button>{' '}                                        
                                         <Button  onClick={() => {
                                             deleteStudent(item.id);
                                         }} color="danger"> <DeleteOutlined /> Delete
-                                    </Button>
+                                        </Button>
                                     </td>
                                 </tr>
                             ))
@@ -174,7 +175,9 @@ function StudentList() {
 
                 </Table>
             )}
-                
+
+            </Spin>
+
             <div>
 
                 <Modal isOpen={modal} fade={true}   >
@@ -208,8 +211,9 @@ function StudentList() {
                             </form>
                         </div>
                      </ModalBody>
+
                     <ModalFooter>
-                        <Button color="primary" type="submit" form="formSubmit" >Save</Button>{' '}
+                        <Button color="primary" type="submit" form="formSubmit">Save</Button>{' '}
                         <Button color="secondary" onClick={handleCancel}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
