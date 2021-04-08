@@ -5,9 +5,10 @@ import React, { useState } from "react";
 
 import {
   // BrowserRouter as Router,
-  //Switch,
+  Switch,
   Route,
   // Link,
+  Redirect,
   useHistory
 } from "react-router-dom";
 import { Col } from 'reactstrap';
@@ -52,16 +53,20 @@ function App() {
                 "Logged in successfully"
               }
               type="success" closable />
-       
+
           </Col>
-          <Route path="/students/"  component={StudentList} />
-          <Route path="/courses/" exact component={CourseList} />
+          <Switch>
+            <Redirect to="/students" ></Redirect>
+            <Route path="/students/" component={StudentList} />
+            <Route path="/courses/" exact component={CourseList} />
+
+          </Switch>
         </React.Fragment>
       )
     } else {
       return (
         <NormalLoginForm login={Login} />
-       
+
       );
     }
   }
