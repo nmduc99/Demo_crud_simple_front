@@ -26,11 +26,8 @@ function StudentList() {
         } catch (error) {
             console.log(error);
         }
-        //console.log("Delete");   
-
     }
-   
-  
+ 
 
     async function getAll() {
         setState({ loading: true, data: [] });
@@ -60,14 +57,12 @@ function StudentList() {
          
         if(student.name ===""){
            info(); 
-        }else 
-        if(student.code ===""){
+        }else  if(student.code ===""){
             info(); 
-         }else 
-         if(student.address ===""){
+         }else if(student.address ===""){
             info(); 
-         }else 
-             
+         }else
+
         if (student.id) {
             const { id } = student;
             data.id = id
@@ -85,7 +80,6 @@ function StudentList() {
             code: '',
             address: '',
             email: '',
-
         })
     }
 
@@ -105,7 +99,6 @@ function StudentList() {
     }
 
     function editStudent(id) {
-        
         axios.get(`http://localhost:8080/students/${id}`)
             .then(response => response.data)
             .then(data => setStudent({
@@ -180,7 +173,7 @@ function StudentList() {
 
             <div>
 
-                <Modal isOpen={modal} fade={true}   >
+                <Modal isOpen={modal} fade={true} className="modalStudent"  >
                     <ModalHeader >Student</ModalHeader>
                     <ModalBody>
                         <div>

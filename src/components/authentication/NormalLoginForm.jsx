@@ -2,14 +2,11 @@ import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Col } from 'reactstrap';
 
-
 const NormalLoginForm = ({ login }) => {
   const onFinish = (values) => {
 // console.log('Received values of form: ', values);
     login(values.username, values.password)
   };
-
-
   return (
     <Form
       name="normal_login"

@@ -4,7 +4,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { Table } from 'reactstrap';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { message,Spin } from 'antd';
-
 function CourseList() {
     const key = 'test';
         const mesdel = () => {
@@ -41,7 +40,6 @@ function CourseList() {
         const info = () => {
             message.error('Do not leave the code and name blank');
           };
-
         
         if(course.code ===""){
            info();             
@@ -119,6 +117,7 @@ function CourseList() {
             <p> </p>
             <Button color="primary" onClick={handleOnAdd}> <PlusOutlined/>  Add</Button>
             <p> </p>
+            
             <Spin tip="Loading..." delay="1000"  spinning={loading} size="large"> 
             
             {!loading && (
