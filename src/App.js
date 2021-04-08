@@ -29,6 +29,10 @@ function App() {
 
   const renderComponent = (authen) => {
 
+    // function logOut(){
+    //   localStorage.removeItem('authen')
+    //   setAuthen(false)
+    // }
     if (authen) {
 
       return (
@@ -42,10 +46,11 @@ function App() {
               const { text, key } = menuItem;
               return (
                 <Menu.Item key={key}>{text}</Menu.Item>
-              )
+               )
             }
             )}
 
+          {/* <Menu.Item  onClick={logOut}>Logout</Menu.Item> */}
           </Menu>
           <Col sm="3">
             <Alert  //"Logged in successfully" 
@@ -59,14 +64,12 @@ function App() {
             <Redirect to="/students" ></Redirect>
             <Route path="/students/" component={StudentList} />
             <Route path="/courses/" exact component={CourseList} />
-
           </Switch>
         </React.Fragment>
       )
-    } else {
+    }  else {
       return (
         <NormalLoginForm login={Login} />
-
       );
     }
   }
