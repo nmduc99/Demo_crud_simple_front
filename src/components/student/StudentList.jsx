@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import React from "react"
 import Axios from 'axios'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
-import axios from "axios";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { message, Spin } from 'antd';
 
@@ -72,9 +71,9 @@ function StudentList() {
             const { id } = student;
             data.id = id
             console.log(data)
-            await axios.put(`http://localhost:8080/students/${id}`, data);
+            await Axios.put(`http://localhost:8080/students/${id}`, data);
         } else {
-            await axios.post('http://localhost:8080/students', data);
+            await Axios.post('http://localhost:8080/students', data);
         }
         setModal(false);
         getAll();
@@ -106,7 +105,7 @@ function StudentList() {
 
     function editStudent(id) {
         
-        axios.get(`http://localhost:8080/students/${id}`)
+        Axios.get(`http://localhost:8080/students/${id}`)
             .then(response => response.data)
             .then(data => setStudent({
                 id: data.id,

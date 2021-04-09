@@ -5,7 +5,7 @@ import { Col } from 'reactstrap';
 
 const NormalLoginForm = ({ login }) => {
   const onFinish = (values) => {
-// console.log('Received values of form: ', values);
+   //console.log('Received values of form: ', values);
     login(values.username, values.password)
   };
 
@@ -50,7 +50,6 @@ const NormalLoginForm = ({ login }) => {
         </Form.Item>
 
       </Col>
-
 
       <Col sm="3">
         <Form.Item>

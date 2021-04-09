@@ -18,8 +18,8 @@ import { Alert, Menu } from 'antd';
 function App() {
 
   const [authen, setAuthen] = useState(localStorage.getItem("authen") === "true");
+  
   let history = useHistory();
-
   function Login(username, password) {
     if (username === 'admin') {
       setAuthen(true)
@@ -27,12 +27,19 @@ function App() {
     }
   }
 
+   const menuData = [
+    { key: "/students", text: "Student" },
+    { key: "/courses", text: "Courses" },
+   
+  ]
+
   const renderComponent = (authen) => {
 
-    // function logOut(){
-    //   localStorage.removeItem('authen')
-    //   setAuthen(false)
-    // }
+    function logOut(){
+      localStorage.removeItem('authen')
+      setAuthen(false)
+    }
+
     if (authen) {
 
       return (
@@ -46,28 +53,28 @@ function App() {
               const { text, key } = menuItem;
               return (
                 <Menu.Item key={key}>{text}</Menu.Item>
-               )
+              )
             }
             )}
 
-          {/* <Menu.Item  onClick={logOut}>Logout</Menu.Item> */}
+            <Menu.Item  onClick={logOut}>Logout</Menu.Item>
           </Menu>
-          <Col sm="3">
-            <Alert  //"Logged in successfully" 
+          {/* <Col sm="3">
+            <Alert  
               message={
                 "Logged in successfully"
               }
               type="success" closable />
 
-          </Col>
+          </Col> */}
           <Switch>
             <Redirect to="/students" ></Redirect>
-            <Route path="/students/" component={StudentList} />
+            <Route path="/students/" exact component={StudentList} />
             <Route path="/courses/" exact component={CourseList} />
           </Switch>
         </React.Fragment>
       )
-    }  else {
+    } else {
       return (
         <NormalLoginForm login={Login} />
       );
@@ -79,11 +86,7 @@ function App() {
     history.push(e.key);
   }
 
-  const menuData = [
-    { key: "/students", text: "Student" },
-    { key: "/courses", text: "Courses" }
-  ]
-
+ 
   return (
     <div className="App">
       {renderComponent(authen)}

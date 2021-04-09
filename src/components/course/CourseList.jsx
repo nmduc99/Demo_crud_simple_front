@@ -13,6 +13,7 @@ function CourseList() {
           message.success({ content: 'Successfully!', key, duration: 2 });
         }, 200);
       };
+
     const deleteCourse = async (id) => {
         try {
             await Axios.delete(`http://localhost:8080/courses/${id}`);
@@ -29,7 +30,6 @@ function CourseList() {
         const response = await Axios.get(`http://localhost:8080/courses`);
         setState({ loading: false, data: response.data || [] });
     }
-
 
     async function handleOnSubmit(e) {
         e.preventDefault();
