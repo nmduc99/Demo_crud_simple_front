@@ -2,19 +2,17 @@ import './App.css';
 import StudentList from './components/student/StudentList';
 import CourseList from './components/course/CourseList';
 import React, { useState } from "react";
-import {  SolutionOutlined, BarsOutlined } from '@ant-design/icons';
 
 import {
   // BrowserRouter as Router,
-  //Switch,
+  Switch,
   Route,
   // Link,
-  useHistory
+  useHistory,
+  Redirect
 } from "react-router-dom";
-import { Col } from 'reactstrap';
 import NormalLoginForm from './components/authentication/NormalLoginForm'
-import { Alert, Menu} from 'antd';
-const { SubMenu } = Menu;
+import { Menu } from 'antd';
 
 function App() {
 
@@ -33,19 +31,35 @@ function App() {
     if (authen) {
       return (
         <React.Fragment>
-          <Col sm="3">
-            <Alert message={"Logged in successfully"}
-              type="success" closable />
-          </Col>
-          <Route path="/students/" exact component={StudentList} />
-          <Route path="/courses/" exact component={CourseList} />
+          <Menu
+            style={{ width: 256 }}
+            mode="inline"
+            onClick={handleClick}
+          >
+            <Menu.Item key="/students">Student List</Menu.Item>
+            <Menu.Item key="/courses">Course List</Menu.Item>
+
+          </Menu>
+
+          <Switch>
+            <Route path="/students/" exact component={StudentList} />
+            <Route path="/courses/" exact component={CourseList} />
+          </Switch>
+          
         </React.Fragment>
       )
     } else {
       return (
-        <Route path="/" exact render={() => {
-          return !authen && <NormalLoginForm login={Login} />
-        }} />
+        <Switch>
+          <Route path="/login"
+            exact render={() => {
+              return !authen && <NormalLoginForm login={Login} />
+            }}
+          />
+          <Redirect to="/login" exact />  
+
+        </Switch>
+
       );
     }
   }
@@ -56,25 +70,11 @@ function App() {
   }
 
   return (
-   <> <div className="App">
-      <Menu 
-        style={{ width: 256 }}
-        mode="inline"
-        onClick={handleClick}
-      >
-        
-        <SubMenu key="sub1" icon={<SolutionOutlined />} title="Student">
-          <Menu.Item key="/students">Student List</Menu.Item>
-        </SubMenu>
-
-        <SubMenu key="sub2" icon={<BarsOutlined />} title="Course">
-          <Menu.Item key="/courses">Course List</Menu.Item>
-        </SubMenu>
-      </Menu>
-
+    <> <div>
       {renderComponent(authen)}
     </div>
     </>
+
   )
 
 }

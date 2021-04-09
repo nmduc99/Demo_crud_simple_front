@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import Axios from 'axios'
+import axios from "axios";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { Table } from 'reactstrap';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { message,Spin } from 'antd';
+
 function CourseList() {
     const key = 'test';
         const mesdel = () => {
@@ -12,9 +13,10 @@ function CourseList() {
           message.success({ content: 'Successfully!', key, duration: 2 });
         }, 200);
       };
+
     const deleteCourse = async (id) => {
-        try {
-            await Axios.delete(`http://localhost:8080/courses/${id}`);
+        try {   
+            await axios.delete(`http://localhost:8080/courses/${id}`);
             await getAll();
             mesdel();
         } catch (error) {
@@ -25,7 +27,7 @@ function CourseList() {
 
     async function getAll() {
         setState({ loading: true, data: [] });
-        const response = await Axios.get(`http://localhost:8080/courses`);
+        const response = await axios.get(`http://localhost:8080/courses`);
         setState({ loading: false, data: response.data || [] });
     }
 
@@ -50,11 +52,11 @@ function CourseList() {
         if(course.id){
             const{id} = course;
             data.id = id
-            await Axios.put(`http://localhost:8080/courses/${id}`, data);
+            await axios.put(`http://localhost:8080/courses/${id}`, data);
 
         }else
         {
-            await Axios.post('http://localhost:8080/courses', data);
+            await axios.post('http://localhost:8080/courses', data);
 
         }
         setModal(false);
@@ -83,7 +85,7 @@ function CourseList() {
     
     function editCourse(id)
     {
-        Axios.get(`http://localhost:8080/courses/${id}`)
+        axios.get(`http://localhost:8080/courses/${id}`)
         .then(response => response.data)
         .then(data => setCourse({
             id: data.id,
@@ -118,7 +120,7 @@ function CourseList() {
             <Button color="primary" onClick={handleOnAdd}> <PlusOutlined/>  Add</Button>
             <p> </p>
             
-            <Spin tip="Loading..." delay="1000"  spinning={loading} size="large"> 
+            <Spin tip="Loading..." delay="500"  spinning={loading} size="large"> 
             
             {!loading && (
                 <Table bordered>

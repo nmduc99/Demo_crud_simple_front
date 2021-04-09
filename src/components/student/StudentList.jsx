@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import React from "react"
-import Axios from 'axios'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 import axios from "axios";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -20,7 +19,7 @@ function StudentList() {
 
     const deleteStudent = async (id) => {
             try {   
-            await Axios.delete(`http://localhost:8080/students/${id}`);
+            await axios.delete(`http://localhost:8080/students/${id}`);
             await getAll();
             mesdel();
         } catch (error) {
@@ -31,7 +30,7 @@ function StudentList() {
 
     async function getAll() {
         setState({ loading: true, data: [] });
-        const response = await Axios.get(`http://localhost:8080/students`);
+        const response = await axios.get(`http://localhost:8080/students`);
         setState({ loading: false, data: response.data || [] });
     }
 
@@ -130,7 +129,7 @@ function StudentList() {
             <p> </p>
             <Button color="primary"  onClick={handleOnAdd}>  <PlusOutlined/> Add</Button>
             <p> </p>
-            <Spin tip="Loading..." delay="1000" spinning={loading} size="large"> 
+            <Spin tip="Loading..." delay="500" spinning={loading} size="large"> 
             {!loading && (
                 <Table bordered>
                     <thead>
