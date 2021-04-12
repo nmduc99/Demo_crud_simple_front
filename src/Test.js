@@ -16,9 +16,9 @@ import { Menu } from 'antd';
 
 import { Col, Row } from 'reactstrap';
 
-function App() {
+function Test() {
 
-    const [authen, setAuthen] = useState(localStorage.getItem("authen") === "true");
+    const [authen, setAuthen] = useState(localStorage.getItem("authen") === "false");
     let history = useHistory();
 
     function Login(username, password) {
@@ -93,4 +93,4 @@ function App() {
     )
 
 }
-export default App;
+export default Test;
