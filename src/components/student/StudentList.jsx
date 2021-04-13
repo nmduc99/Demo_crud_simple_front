@@ -1,12 +1,11 @@
 import '../student/StudentList.css';
-import { useEffect, useState } from "react";
-import React from "react"
+import React, { useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Card, CardBody } from 'reactstrap';
 import axios from "axios";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { message, Spin } from 'antd';
 function StudentList() {
-
+    
     const [state, setState] = useState({ loading: true, data: [] });
 
     const { loading, data } = state || {};
@@ -64,7 +63,6 @@ function StudentList() {
             address: student.address,
             email: student.email
         }
-
 
         if (student.name === "") {
             info();

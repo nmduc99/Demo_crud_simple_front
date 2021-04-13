@@ -13,16 +13,15 @@ import {
 
 import NormalLoginForm from './components/authentication/NormalLoginForm'
 import { Menu } from 'antd';
-
 import { Col, Row } from 'reactstrap';
 
 function App() {
 
     const [authen, setAuthen] = useState(localStorage.getItem("authen") === "true");
-    let history = useHistory();
+    const history = useHistory();
 
     function Login(username, password) {
-        console.log(username)
+        //console.log(username)
         if (username === 'admin') {
             setAuthen(true)
             localStorage.setItem("authen", true)
@@ -34,7 +33,6 @@ function App() {
     }
 
     const renderComponent = (authen) => {
-
         if (authen) {
             return (
                 <React.Fragment>

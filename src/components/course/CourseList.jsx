@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody } from 'reactstrap';
 import { Table } from 'reactstrap';
@@ -46,6 +46,7 @@ function CourseList() {
         const response = await axios.get(`http://localhost:8080/courses`);
         setState({ loading: false, data: response.data || [] });
     }
+    
     useEffect(() => {
         setState({ loading: true, data: [] });
         getAll();
