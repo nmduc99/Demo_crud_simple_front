@@ -16,7 +16,7 @@ import { Menu } from 'antd';
 import { Col, Row } from 'reactstrap';
 import { message } from 'antd';
 
-import { LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined,HomeOutlined } from '@ant-design/icons';
 
 function App() {
 
@@ -56,7 +56,8 @@ function App() {
                 <React.Fragment>
 
                     <Row>
-                        <Col sm={10}>
+                        <Col sm={10}>     <HomeOutlined />
+
                         </Col>
                         <Col sm={2}>
                             <Menu

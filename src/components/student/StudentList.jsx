@@ -155,18 +155,20 @@ function StudentList() {
                                     <td><b>CodeStudent</b></td>
                                     <td><b>Address</b></td>
                                     <td><b>Email</b></td>
+
                                     <td></td>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    data && data.map((item, courseIndex) => (
-                                        <tr key={courseIndex}>
+                                    data && data.map((item, studentIndex) => (
+                                        <tr key={studentIndex}>
                                             <td>{item.id}</td>
                                             <td>{item.name}</td>
                                             <td>{item.codeStudent}</td>
                                             <td>{item.address}</td>
                                             <td>{item.email}</td>
+
                                             <td>
                                                 {/* <Button 
                                                     onClick={() => editStudent(item.id)}
