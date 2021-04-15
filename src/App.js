@@ -14,28 +14,63 @@ import {
 import NormalLoginForm from './components/authentication/NormalLoginForm'
 import { Menu } from 'antd';
 import { Col, Row } from 'reactstrap';
+import { message } from 'antd';
+
+import { LogoutOutlined } from '@ant-design/icons';
 
 function App() {
 
-    const [authen, setAuthen] = useState(localStorage.getItem("authen") === "true");
+    const [authen, setAuthen] = useState(sessionStorage.getItem("authen") === "true");
     const history = useHistory();
+    const logInMes = () => {
+        message.success('Login successfully ');
+    };
 
+    const logOutMes = () => {
+        message.success('Logout successfully ');
+    };
+
+    const logInErro = () => {
+        message.error(' Username or password is incorrect ');
+    };
     function Login(username, password) {
         //console.log(username)
-        if (username === 'admin') {
+        if (username === 'admin' && password === '123') {
             setAuthen(true)
-            localStorage.setItem("authen", true)
+            sessionStorage.setItem("authen", true)
+            logInMes();
+        } else {
+            logInErro();
         }
+
     }
     function Logout() {
-        localStorage.removeItem('authen')
+        sessionStorage.removeItem('authen')
         setAuthen(false)
+        logOutMes()
     }
 
     const renderComponent = (authen) => {
         if (authen) {
             return (
                 <React.Fragment>
+
+                    <Row>
+                        <Col sm={10}>
+                        </Col>
+                        <Col sm={2}>
+                            <Menu
+                                mode="inline"
+                                onClick={handleClick}
+                            >
+                                <>
+                                    <Menu.Item key="/logout" onClick={Logout}><LogoutOutlined />Logout</Menu.Item>
+                                </>
+                            </Menu>
+                        </Col>
+
+                    </Row>
+
                     <Row>
                         <Col sm={2}>
                             <Menu
@@ -44,7 +79,6 @@ function App() {
                             >
                                 <Menu.Item key="/students">Student List</Menu.Item>
                                 <Menu.Item key="/courses">Course List</Menu.Item>
-                                <Menu.Item key="/logout" onClick={Logout}>Logout</Menu.Item>
                             </Menu>
                         </Col>
 
@@ -57,10 +91,15 @@ function App() {
                                     </Switch>
                                 </Col>
                             </Row>
-                        
+
                         </Col>
 
                     </Row>
+
+                    {/* <Row>
+                        <Col className="d-flex justify-content-center" > Footer </Col>
+                    </Row> */}
+
                 </React.Fragment>
             )
         } else {

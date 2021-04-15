@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Card, CardBody } from 'reactstrap';
 import axios from "axios";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { message, Spin } from 'antd';
+import { message, Spin, Popconfirm, Pagination} from 'antd';
 function StudentList() {
-    
+
     const [state, setState] = useState({ loading: true, data: [] });
 
     const { loading, data } = state || {};
@@ -20,6 +20,7 @@ function StudentList() {
 
     const [modal, setModal] = useState(false);
     const key = 'test';
+
     const mesdel = () => {
         message.loading({ content: 'loading....', key });
         setTimeout(() => {
@@ -29,6 +30,12 @@ function StudentList() {
 
     const info = () => {
         message.error('Do not leave your name, student code, or address blank');
+    };
+
+
+
+    const addSuccess = () => {
+        message.success('Create');
     };
 
     const deleteStudent = async (id) => {
@@ -41,6 +48,7 @@ function StudentList() {
         }
     }
 
+
     async function getAll() {
         setState({ loading: true, data: [] });
         const response = await axios.get(`http://localhost:8080/students`);
@@ -49,9 +57,6 @@ function StudentList() {
 
     useEffect(() => {
         setState({ loading: true, data: [] });
-        // setTimeout(() => {
-        //     getAll();
-        // }, 200)
         getAll();
     }, [])
 
@@ -75,10 +80,11 @@ function StudentList() {
             if (student.id) {
                 const { id } = student;
                 data.id = id
-                console.log(data)
+                //console.log(data)
                 await axios.put(`http://localhost:8080/students/${id}`, data);
             } else {
                 await axios.post('http://localhost:8080/students', data);
+                addSuccess()
             }
         setModal(false);
 
@@ -91,11 +97,13 @@ function StudentList() {
             address: '',
             email: '',
         })
+
     }
 
     function handleOnAdd() {
         setModal(true);
     }
+
     function handleCancel() {
         setStudent({
             id: '',
@@ -130,8 +138,9 @@ function StudentList() {
                 </div>
                 <div className=" d-flex align-items-end">
                     <Button color="primary" onClick={handleOnAdd}>
-                        <PlusOutlined /> Add Student</Button>
+                        <PlusOutlined /> Add </Button>
                 </div>
+           
             </div>
 
             {loading && <Spin className="d-flex justify-content-center" />}
@@ -159,27 +168,31 @@ function StudentList() {
                                             <td>{item.address}</td>
                                             <td>{item.email}</td>
                                             <td>
-                                                <Button color="info"
+                                                {/* <Button 
                                                     onClick={() => editStudent(item.id)}
-                                                > <EditOutlined /> </Button>{' '}
-                                                <Button onClick={() => {
-                                                    deleteStudent(item.id);
+                                                > <EditOutlined /> </Button>{' '} */}
+                                                {/* <Button onClick={() => {
+                                                    //deleteStudent(item.id)
                                                 }}
-                                                    color="danger"> <DeleteOutlined /></Button>
+                                                    color="danger"> <DeleteOutlined /></Button> */}
 
+                                                <EditOutlined onClick={() => editStudent(item.id)} /> {' '}
+                                                <Popconfirm title="Are you sure？" onConfirm={() => deleteStudent(item.id)} okText="Yes" cancelText="No" >
+                                                    <DeleteOutlined />
+                                                </Popconfirm>
                                             </td>
                                         </tr>
                                     ))
                                 }
                             </tbody>
                         </Table>
+                        <Pagination defaultCurrent={1} total={50} className="d-flex justify-content-center" />
                     </CardBody>
 
                 </Card>
 
 
             )}
-
             <div>
                 <Modal isOpen={modal} fade={true} >
                     <ModalHeader >Student</ModalHeader>
@@ -211,15 +224,11 @@ function StudentList() {
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" type="submit" form="formSubmit">Save</Button>{' '}
+                        <Button color="info" type="submit" form="formSubmit">Save</Button>{' '}
                         <Button color="secondary" onClick={handleCancel}>Cancel</Button>
                     </ModalFooter>
-
                 </Modal>
-
             </div>
-
-
 
         </div>
 

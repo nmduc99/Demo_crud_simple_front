@@ -1,9 +1,9 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody } from 'reactstrap';
 import { Table } from 'reactstrap';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { message, Spin } from 'antd';
+import { message, Spin, Popconfirm, Pagination } from 'antd';
 import '../course/CourseCss.css';
 
 
@@ -31,6 +31,11 @@ function CourseList() {
         message.error('Do not leave the code and name blank');
     };
 
+         
+    const addSuccess = () => {
+        message.success('Create');
+    };
+
     const deleteCourse = async (id) => {
         try {
             await axios.delete(`http://localhost:8080/courses/${id}`);
@@ -46,7 +51,7 @@ function CourseList() {
         const response = await axios.get(`http://localhost:8080/courses`);
         setState({ loading: false, data: response.data || [] });
     }
-    
+
     useEffect(() => {
         setState({ loading: true, data: [] });
         getAll();
@@ -63,19 +68,18 @@ function CourseList() {
 
         if (course.code === "") {
             info();
-        } else
-            if (course.name === "") {
-                info();
-            } else
-                if (course.id) {
-                    const { id } = course;
-                    data.id = id
-                    await axios.put(`http://localhost:8080/courses/${id}`, data);
+        } else if (course.name === "") {
+            info();
+        } else if (course.id) {
+            const { id } = course;
+            data.id = id
+            await axios.put(`http://localhost:8080/courses/${id}`, data);
 
-                } else {
-                    await axios.post('http://localhost:8080/courses', data);
+        } else {
+            await axios.post('http://localhost:8080/courses', data);
+            addSuccess()
 
-                }
+        }
         setModal(false);
         getAll();
 
@@ -108,7 +112,6 @@ function CourseList() {
                 code: data.code,
                 name: data.name,
                 descrition: data.descrition
-
             }))
         setModal(true)
     }
@@ -121,7 +124,7 @@ function CourseList() {
                 </div>
                 <div className=" d-flex align-items-end">
                     <Button color="primary" onClick={handleOnAdd}>
-                        <PlusOutlined /> Add Course</Button>
+                        <PlusOutlined /> Add </Button>
                 </div>
             </div>
 
@@ -147,12 +150,17 @@ function CourseList() {
                                             <td>{item.code}</td>
                                             <td>{item.name}</td>
                                             <td>{item.descrition}</td>
-                                            <td><Button color="info" onClick={() => editCourse(item.id)}
+                                            <td>
+                                                {/* <Button color="info" onClick={() => editCourse(item.id)}
                                             > <EditOutlined /></Button>{' '}
                                                 <Button onClick={() => {
                                                     deleteCourse(item.id);
                                                 }}
-                                                    color="danger"> <DeleteOutlined /></Button>
+                                                    color="danger"> <DeleteOutlined /></Button> */}
+                                                     <EditOutlined  onClick={() => editCourse(item.id)}/> {' '}
+                                                <Popconfirm title="Are you sure？" onConfirm={() => deleteCourse(item.id)} okText="Yes" cancelText="No" >
+                                                    <DeleteOutlined />
+                                                </Popconfirm>
                                             </td>
 
                                         </tr>
@@ -161,6 +169,8 @@ function CourseList() {
                             </tbody>
 
                         </Table>
+                        <Pagination defaultCurrent={1} total={50} className="d-flex justify-content-center"/>
+
                     </CardBody>
 
                 </Card>

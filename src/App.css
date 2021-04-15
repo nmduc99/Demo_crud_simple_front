@@ -43,6 +43,10 @@
   float: right;
 }
 
+.ant-menu-item{
+  padding-left: 24px;
+  color: #0f1ed8;
+}
 
 @keyframes App-logo-spin {
   from {
