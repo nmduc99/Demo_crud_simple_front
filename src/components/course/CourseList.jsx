@@ -31,7 +31,7 @@ function CourseList() {
         message.error('Do not leave the code and name blank');
     };
 
-         
+
     const addSuccess = () => {
         message.success('Create');
     };
@@ -157,7 +157,7 @@ function CourseList() {
                                                     deleteCourse(item.id);
                                                 }}
                                                     color="danger"> <DeleteOutlined /></Button> */}
-                                                     <EditOutlined  onClick={() => editCourse(item.id)}/> {' '}
+                                                <EditOutlined onClick={() => editCourse(item.id)} /> {' '}
                                                 <Popconfirm title="Are you sure？" onConfirm={() => deleteCourse(item.id)} okText="Yes" cancelText="No" >
                                                     <DeleteOutlined />
                                                 </Popconfirm>
@@ -169,7 +169,7 @@ function CourseList() {
                             </tbody>
 
                         </Table>
-                        <Pagination defaultCurrent={1} total={50} className="d-flex justify-content-center"/>
+                        <Pagination defaultCurrent={1} total={50} className="d-flex justify-content-center" />
 
                     </CardBody>
 

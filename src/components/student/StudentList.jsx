@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Card, CardBody } from 'reactstrap';
 import axios from "axios";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { message, Spin, Popconfirm, Pagination} from 'antd';
+import { message, Spin, Popconfirm, Pagination, Input, Space } from 'antd';
 function StudentList() {
 
     const [state, setState] = useState({ loading: true, data: [] });
@@ -48,6 +48,9 @@ function StudentList() {
         }
     }
 
+
+    const { Search } = Input;
+    const onSearch = value => console.log(value);
 
     async function getAll() {
         setState({ loading: true, data: [] });
@@ -140,7 +143,14 @@ function StudentList() {
                     <Button color="primary" onClick={handleOnAdd}>
                         <PlusOutlined /> Add </Button>
                 </div>
-           
+                <div className="d-flex justify-content-center" > 
+                    <Space direction="vertical">
+                        <Search placeholder="input search text" allowClear onSearch={onSearch} style={{ width: 200 }} />
+                    </Space>
+                </div>
+
+
+
             </div>
 
             {loading && <Spin className="d-flex justify-content-center" />}
